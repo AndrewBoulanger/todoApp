@@ -1,10 +1,7 @@
-using JetBrains.Annotations;
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
-using UnityEngine.UIElements;
 
 
 [Serializable]
@@ -41,8 +38,11 @@ public class WeatherChecker : MonoBehaviour
             loc = location;
             StartCoroutine(MakeWeatherRequest());
             timer = waitTime;
+            PlayerPrefs.SetString("location", loc);
         }
     }
+
+    public string getLoc() { return loc; }
       
     IEnumerator MakeWeatherRequest()
     {
@@ -78,6 +78,9 @@ public class WeatherChecker : MonoBehaviour
     void Start()
     {
         UI = gameObject.GetComponent<WeatherUIBehaviour>();
+
+        loc = PlayerPrefs.HasKey("location") ? PlayerPrefs.GetString("location") : loc;
+
         StartCoroutine(MakeWeatherRequest());
     }
 

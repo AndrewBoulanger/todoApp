@@ -1,9 +1,7 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
+
 using UnityEngine;
-using UnityEngine.UI;
+
 
 public class RefreshTimeOptions : MonoBehaviour
 {
@@ -13,7 +11,8 @@ public class RefreshTimeOptions : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        SetRefreshTime(6);
+        int val = PlayerPrefs.HasKey("refresh") ? PlayerPrefs.GetInt("refresh") : 6;
+        SetRefreshTime(val);
     }
 
     public void SetRefreshTime(int value)
@@ -31,5 +30,6 @@ public class RefreshTimeOptions : MonoBehaviour
         }
 
         refresher.UpdateTimeToRefresh(next);
+        PlayerPrefs.SetInt("refresh", value);
     }
 }

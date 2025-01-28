@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class WeatherUIBehaviour : MonoBehaviour
@@ -18,9 +15,6 @@ public class WeatherUIBehaviour : MonoBehaviour
             feelslikeLabel.text = data.current.feelslike_c.ToString();
             condition_label.text = data.current.condition.text;
         }
-        else
-        {
-            Debug.Log("missing reference to temperature labels");
-        }
+
     }
 }

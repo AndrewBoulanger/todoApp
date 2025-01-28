@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -30,7 +28,6 @@ public class SettingsButton : MonoBehaviour
                 settingsActive = false;
                 image.sprite = settingsIcon;
             }
-            Debug.Log(result);
         }
         else
         {

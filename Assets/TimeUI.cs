@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -17,6 +15,7 @@ public class TimeUI : MonoBehaviour
 
         string meridian = (int)hour > 11 ? "pm" : "am";
         string min = System.DateTime.Now.Minute.ToString();
+        if (min.Length == 1) min = "0" + min;
 
         if (textBox != null)
         {

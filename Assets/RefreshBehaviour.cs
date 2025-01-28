@@ -1,12 +1,18 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class RefreshBehaviour : MonoBehaviour
 {
-    double timer = 0;
     double dayTimeInSeconds = 86400;
+    double timer = 86400;
+
+    public DateTime lastRefresh;
+
+    private void Start()
+    {
+
+        Load();
+    }
 
     // Update is called once per frame
     void Update()
@@ -19,18 +25,39 @@ public class RefreshBehaviour : MonoBehaviour
         }
     }
 
-    void Refresh()
+    public void Refresh()
     {
         taskBehaviour[] tasks = GetComponentsInChildren<taskBehaviour>();
         foreach( taskBehaviour task in tasks ) 
         {
             task.RefreshTask();
         }
+        lastRefresh = DateTime.Now;
+        Save();
     }
 
     public void UpdateTimeToRefresh(DateTime next)
     {
         timer = next.Subtract(System.DateTime.Now).TotalSeconds;
-        Debug.Log("the timer will refresh in " + timer + " seconds");
+    }
+
+    void Save()
+    {
+        string jsn = JsonUtility.ToJson(lastRefresh);
+        string path = Application.persistentDataPath + "/" + "lastRefresh" + ".json";
+        System.IO.File.WriteAllText(path, jsn);
+    }
+
+    private void Load()
+    {
+        string path = Application.persistentDataPath + "/" + "lastRefresh" + ".json";
+        if (System.IO.File.Exists(path))
+        {
+            string data = System.IO.File.ReadAllText(path);
+            lastRefresh = JsonUtility.FromJson<DateTime>(data);
+
+            if(DateTime.Now.Subtract(lastRefresh).Seconds > dayTimeInSeconds )
+                Refresh();
+        }
     }
 }

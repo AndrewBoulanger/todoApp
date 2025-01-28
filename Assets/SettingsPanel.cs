@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class SettingsPanel : MonoBehaviour
@@ -17,7 +16,7 @@ public class SettingsPanel : MonoBehaviour
 
     public bool LerpUp()
     {
-        if(rec.position.y != -targetY)
+        if(!Mathf.Approximately(rec.position.y, -targetY)) 
             return false;
         StartCoroutine("Lerp", targetY);
             return true;
@@ -25,9 +24,9 @@ public class SettingsPanel : MonoBehaviour
 
     public bool LerpDown()
     {
-        if (rec.position.y != targetY)
+        if (!Mathf.Approximately(rec.position.y, targetY))
             return false;
-        StartCoroutine("Lerp",- targetY);
+        StartCoroutine("Lerp",-targetY);
             return true;
     }
 
@@ -47,4 +46,5 @@ public class SettingsPanel : MonoBehaviour
         rec.position = new Vector3(rec.position.x, targetY);
         yield return null;
     }
+
 }
